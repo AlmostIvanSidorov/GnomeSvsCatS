@@ -25,7 +25,7 @@ def shell():
           "PI should be calculated. 'quit' command can be used for exit")
 
     while True:
-        N = input("Input some number or 'quit' command:")
+        N = input("Input your number or 'quit' command:")
 
         if N == 'quit':
             break
