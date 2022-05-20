@@ -106,15 +106,24 @@ class Account:
         return f"Account owner: {self.owner} \nAccount balance: {self.balance}"
 
 
-acct1 = Account('Ivan', 100)
+# acct1 = Account('Ivan', 100)
+#
+# print(acct1)
+#
+# print(acct1.owner, acct1.balance)
+#
+# acct1.deposit(50)
+#
+# acct1.withdraw(75)
+#
+# acct1.withdraw(500)
 
-print(acct1)
+class Dog:
+    def __init__(self, breed):
+        self.breed = breed
 
-print(acct1.owner, acct1.balance)
+my_dog = Dog(breed='lab')
 
-acct1.deposit(50)
+print(my_dog.breed)
 
-acct1.withdraw(75)
-
-acct1.withdraw(500)
 

@@ -1,20 +1,18 @@
-import math
+"""
+Enter a number and have the program generate PI up to that many decimal places.
+Keep a limit to how far the program will go.
+"""
+from math import pi
 
-# Tasks:
-# Input Nth digits
-# Calculate PI
-# Output result
 
-
-def calculate_pi_func(N):
-    pi = 3
-    number = 2
-    pi_old = 0
-    while pi - pi_old > 1/(pow(10, (N+4))):
-        pi_old = pi
-        pi = pi + 4/(number*(number+1)*(number+2))-4/((number+4)*(number+3)*(number+2))
-        number = number + 4
-    return pi
+def calculate_pi_func(n):
+    """Return PI number to the n-th decimal place
+    :param n: number of decimal to return
+    :type n: int
+    :return: PI with n decimal places
+    :rtype: str
+    """
+    return f"{pi:.{n}f}"
 
 
 def shell():
@@ -32,7 +30,12 @@ def shell():
         if not N.isdigit():
             print("You didn't enter a number. Try again")
         else:
-            print(calculate_pi_func(int(N)))
+            if int(N) > 50:
+                print("Number must be lower than 51")
+            elif int(N) < 2:
+                print("Your number must be higher than 1")
+            else:
+                print(calculate_pi_func(int(N)))
 
 
 if __name__ == '__main__':
