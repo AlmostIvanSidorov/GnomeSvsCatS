@@ -16,7 +16,7 @@ def calculating_e(decimal_number):
     return f"{e:.{decimal_number}f}"
 
 
-def shell():
+def main():
     print("Welcome to e calculator please enter how "
           "many many decimal places you want to see:")
 
@@ -38,4 +38,4 @@ def shell():
 
 
 if __name__ == '__main__':
-    shell()
+    main()

@@ -15,7 +15,7 @@ def calculate_pi_func(n):
     return f"{pi:.{n}f}"
 
 
-def shell():
+def main():
     """
     Console function only for if __name__ == '__main__': section. No return or input
     """
@@ -39,4 +39,4 @@ def shell():
 
 
 if __name__ == '__main__':
-    shell()
+    main()
