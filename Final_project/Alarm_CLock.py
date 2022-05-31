@@ -13,8 +13,8 @@ def alarm_beep():
 
 
 def alarm(n):
-    print(f"Wait {n} seconds and BEEEEEP")
-    time.sleep(n)
+    print(f"Wait {n} minutes and BEEEEEP")
+    time.sleep(n*60)
     alarm_beep()
 
 
@@ -22,7 +22,7 @@ def main():
     """Alarm second timer"""
     print("Welcome to Alarm Second Timer")
     while True:
-        user_seconds = input("Please enter some integer value of seconds for timer or 'quit' command:")
+        user_seconds = input("Please enter some integer value of minutes for timer or 'quit' command:")
         if user_seconds == 'quit':
             break
         if not user_seconds.isdigit():
