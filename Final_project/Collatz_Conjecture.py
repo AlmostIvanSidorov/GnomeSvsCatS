@@ -4,7 +4,7 @@ Start with a number n > 1. Find the number of steps it takes to reach one using 
 """
 
 
-def func(n):
+def func_v1(n):
     """
     Function for the following process:
     If n is even, divide it by 2. If n is odd, multiply it by 3 and add 1.
@@ -22,6 +22,21 @@ def func(n):
     return step
 
 
+def func_v2(n,step=0):
+    """
+    recursive
+    :param n:
+    :param step:
+    :return:
+    """
+    if n == 1:
+        return step
+    elif n%2 == 0:
+        return func_v2(n/2, step+1)
+    else:
+        return func_v2(n*3+1,step+1)
+
+
 def main():
     print("Welcome!")
 
@@ -33,7 +48,7 @@ def main():
         if not user_number.isdigit():
             print("Please enter an integer number")
         else:
-            steps = func(int(user_number))
+            steps = func_v2(int(user_number))
             print(f"Collatz Conjecture operation took {steps} steps")
 
 
