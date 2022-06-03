@@ -3,17 +3,27 @@ Implement two types of sorting algorithms: Merge sort and bubble sort
 """
 
 
-def buble_sort(user_list, i=0):
+def bubble_sort(user_list, sorted_user_list=None, i=0):
     """Func for bubble sort"""
-    if len(user_list) == 1 or len(user_list) == 2:
-        return user_list
+    sorted_user_list = [] if sorted_user_list is None else sorted_user_list
+    if len(user_list) == 0:
+        sorted_user_list.reverse()
+        return print(sorted_user_list)
     else:
-        return sorted(user_list)
+        if i+1 == len(user_list):
+            buffer_element = user_list.pop()
+            sorted_user_list.append(buffer_element)
+            bubble_sort(user_list, sorted_user_list)
+        elif user_list[i] > user_list[i+1]:
+            user_list[i], user_list[i+1] = user_list[i+1], user_list[i]
+            bubble_sort(user_list, sorted_user_list, i+1)
+        else:
+            bubble_sort(user_list, sorted_user_list, i+1)
 
 
 def merge_sort(user_list):
     """Func for merge sort"""
-    if len(user_list) == 1 or len(user_list) == 2:
+    if len(user_list) == 0 or len(user_list) == 1:
         return user_list
     else:
         return sorted(user_list)
@@ -39,7 +49,7 @@ def main():
                     while True:
                         user_number = input("Please input a number for your list or 'end' command for list end: ")
                         if user_number == 'end':
-                            print(buble_sort(user_list))
+                            bubble_sort(user_list)
                             break
                         if not user_number.isdigit():
                             print("Please enter integer number")
