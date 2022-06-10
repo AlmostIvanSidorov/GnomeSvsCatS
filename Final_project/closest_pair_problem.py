@@ -40,20 +40,15 @@ def show_3d(r_pts, closest):
 
 def get_closest_pair(r_pts):
     # make kdtree and self compare
-    tree = spatial.cKDTree(r_pts)
-
     # compute the distances (take the 2 closest as the
     # first distance is a self-comparison.
-    distances, indexes = tree.query(r_pts, 2)
+    distances, indexes = spatial.cKDTree(r_pts).query(r_pts, 2)
 
     # find minimum non self-reference distance
     mindist_pos = np.argmin(distances[:, 1])
-    print
-    'L2-norm distance', distances[mindist_pos, 1]
-    print
-    'pt1 coords', r_pts[mindist_pos]
-    print
-    'pt2 coords', r_pts[indexes[mindist_pos, 1]]
+    print('L2-norm distance', distances[mindist_pos, 1])
+    print('pt1 coords', r_pts[mindist_pos])
+    print('pt2 coords', r_pts[indexes[mindist_pos, 1]])
 
     # return the two indexes associated with the minimum distance
     return mindist_pos, indexes[mindist_pos, 1]
