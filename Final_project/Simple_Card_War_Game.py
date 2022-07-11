@@ -60,6 +60,12 @@ class Deck:
             for rank in ranks:
                 self.all_cards.append(Card(suit, rank))
 
+    def __str__(self):
+        deck_comp = ''  # start with an empty string
+        for card in self.all_cards:
+            deck_comp += '\n '+card.__str__() # add each Card object's print string
+        return 'The deck has:' + deck_comp
+
     def shuffle(self):
         random.shuffle(self.all_cards)
 
