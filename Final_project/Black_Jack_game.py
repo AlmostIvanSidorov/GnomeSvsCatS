@@ -38,6 +38,11 @@ def main():
 
     while play_game:
         player_choice_1 = input("Do you want to play a game?:")
+        if len(deck.all_cards) < 10:
+            deck = Deck()
+            deck.shuffle()
+            print(len(deck.all_cards))
+            print("Deck shuffled!!!")
         if player_choice_1 == "Yes":
             player_hand.cards = []
             player_hand.value = 0
