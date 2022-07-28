@@ -1,0 +1,1 @@
+export NEW_VAR="Sergeyevich"
