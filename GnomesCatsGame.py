@@ -1,96 +1,53 @@
 #!/usr/bin/env python3
 # Here are we start again!
-import pygame
-
-from pygame.locals import (
-
-    K_UP,
-
-    K_DOWN,
-
-    K_LEFT,
-
-    K_RIGHT,
-
-    K_ESCAPE,
-
-    KEYDOWN,
-
-    QUIT,
-
-)
-
-
-def shutdown_func(game=True):
-    for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                game = False
-
-        elif event.type == pygame.QUIT:
-            game = False
-
-    return game
-
-
-class Player(pygame.sprite.Sprite):
-
-    def __init__(self, screenw, screenh):
-
-        super(Player, self).__init__()
-
-        self.surf = pygame.Surface((75, 25))
-
-        self.surf.fill((255, 255, 255))
-
-        self.rect = self.surf.get_rect()
-
-        self.screenw = screenw
-        self.screenh = screenh
-
-    def update(self, pressed_keys):
-
-        if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -1)
-
-        if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 1)
-
-        if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-1, 0)
-
-        if pressed_keys[K_RIGHT]:
-            self.rect.move_ip(1, 0)
-
-        if self.rect.left < 0:
-            self.rect.left = 0
-
-        if self.rect.right > self.screenw:
-            self.rect.right = self.screenw
-
-        if self.rect.top <= 0:
-            self.rect.top = 0
-
-        if self.rect.bottom >= self.screenh:
-            self.rect.bottom = self.screenh
+from game_classes import *
 
 
 def main():
     pygame.init()
     # Define constants for the screen width and height
 
-    SCREEN_WIDTH = 800
+    player_1 = Player()
 
-    SCREEN_HEIGHT = 600
+    # Create groups to hold enemy sprites and all sprites
 
-    player_1 = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
+    # - enemies is used for collision detection and position updates
 
-    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    # - all_sprites is used for rendering
+
+    enemies = pygame.sprite.Group()
+
+    all_sprites = pygame.sprite.Group()
+
+    all_sprites.add(player_1)
+
+    screen = pygame.display.set_mode([screen_width, screen_height])
+
+    # Create a custom event for adding a new enemy
+
+    ADDENEMY = pygame.USEREVENT + 1
+
+    pygame.time.set_timer(ADDENEMY, 250)
 
     game_on = True
     while game_on:
 
-        game_on = shutdown_func()
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    game_on = False
+
+            elif event.type == pygame.QUIT:
+                game_on = False
+
+            elif event.type == ADDENEMY:
+                # Create the new enemy and add it to sprite groups
+
+                new_enemy = Enemy()
+
+                enemies.add(new_enemy)
+
+                all_sprites.add(new_enemy)
 
         # Get all the keys currently pressed
 
@@ -100,6 +57,10 @@ def main():
 
         player_1.update(pressed_keys)
 
+        # Update enemy position
+
+        enemies.update()
+
         screen.fill((0, 0, 255))
 
         pygame.draw.circle(screen, (255, 200, 255), (250, 250), 100)
@@ -108,7 +69,19 @@ def main():
 
         surf.fill((0, 0, 0))
 
-        screen.blit(player_1.surf, player_1.rect)
+        # Draw all sprites
+
+        for entity in all_sprites:
+            screen.blit(entity.surf, entity.rect)
+
+        # Check if any enemies have collided with the player
+
+        if pygame.sprite.spritecollideany(player_1, enemies):
+            # If so, then remove the player and stop the loop
+
+            player_1.kill()
+
+            game_on = False
 
         pygame.display.flip()
 
