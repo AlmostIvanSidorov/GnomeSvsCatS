@@ -40,7 +40,8 @@ def shutdown_func(game=True):
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+
+    def __init__(self, move_up_sound, move_down_sound):
 
         super(Player, self).__init__()
 
@@ -50,19 +51,25 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.surf.get_rect()
 
+        self.move_up_sound = move_up_sound
+
+        self.move_down_sound = move_down_sound
+
+
     def update(self, pressed_keys):
 
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -5)
+            self.rect.move_ip(0, -10)
 
         if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 5)
+            self.rect.move_ip(0, 10)
 
         if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-5, 0)
+            self.rect.move_ip(-10, 0)
 
         if pressed_keys[K_RIGHT]:
-            self.rect.move_ip(5, 0)
+            self.rect.move_ip(10, 0)
+            self.move_up_sound.play()
 
         if self.rect.left < 0:
             self.rect.left = 0
@@ -106,3 +113,36 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
 
 
+class Cloud(pygame.sprite.Sprite):
+
+    def __init__(self):
+
+        super(Cloud, self).__init__()
+
+        self.surf = pygame.image.load("sprites/cloud.png").convert()
+
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+
+        # The starting position is randomly generated
+
+        self.rect = self.surf.get_rect(
+
+            center=(
+
+                random.randint(screen_width + 20, screen_width + 100),
+
+                random.randint(0, screen_height),
+
+            )
+
+        )
+    # Move the cloud based on a constant speed
+
+    # Remove the cloud when it passes the left edge of the screen
+    def update(self):
+
+        self.rect.move_ip(-5, 0)
+
+        if self.rect.right < 0:
+
+            self.kill()

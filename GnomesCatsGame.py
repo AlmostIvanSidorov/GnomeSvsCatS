@@ -1,14 +1,36 @@
 #!/usr/bin/env python3
 # Here are we start again!
+import time
+
+import pygame.sprite
+
 from game_classes import *
 
 
 def main():
+
+    pygame.mixer.init()
+
     pygame.init()
     clock = pygame.time.Clock()
+
+    pygame.mixer.music.load("sprites/Naruto_Theme.mp3")
+
+    pygame.mixer.music.play(loops=-1)
+
+    move_up_sound = pygame.mixer.Sound("sprites/jumping.wav")
+
+    move_down_sound = pygame.mixer.Sound("sprites/jumping.wav")
+
+    collision_sound = pygame.mixer.Sound("sprites/hit.wav")
+
+    # Load all sound files
+
+    # Sound sources: Jon Fincher
+
     # Define constants for the screen width and height
     screen = pygame.display.set_mode([screen_width, screen_height])
-    player_1 = Player()
+    player_1 = Player(move_up_sound, move_down_sound)
 
     # Create groups to hold enemy sprites and all sprites
 
@@ -17,6 +39,8 @@ def main():
     # - all_sprites is used for rendering
 
     enemies = pygame.sprite.Group()
+
+    clouds = pygame.sprite.Group()
 
     all_sprites = pygame.sprite.Group()
 
@@ -27,6 +51,10 @@ def main():
     ADDENEMY = pygame.USEREVENT + 1
 
     pygame.time.set_timer(ADDENEMY, 250)
+
+    ADDECLOUD = pygame.USEREVENT + 2
+
+    pygame.time.set_timer(ADDECLOUD, 1000)
 
     game_on = True
     while game_on:
@@ -48,6 +76,15 @@ def main():
 
                 all_sprites.add(new_enemy)
 
+            elif event.type == ADDECLOUD:
+                # Create the new enemy and add it to sprite groups
+
+                new_cloud = Cloud()
+
+                clouds.add(new_cloud)
+
+                all_sprites.add(new_cloud)
+
         # Get all the keys currently pressed
 
         pressed_keys = pygame.key.get_pressed()
@@ -59,8 +96,9 @@ def main():
         # Update enemy position
 
         enemies.update()
+        clouds.update()
 
-        screen.fill((255, 255, 255))
+        screen.fill((135, 206, 250))
 
         # Draw all sprites
 
@@ -73,17 +111,24 @@ def main():
             # If so, then remove the player and stop the loop
 
             player_1.kill()
+            move_up_sound.stop()
+
+            move_down_sound.stop()
+
+            collision_sound.play()
+
+            time.sleep(1)
 
             game_on = False
 
         pygame.display.flip()
         clock.tick(30)
 
+    pygame.mixer.music.stop()
+    pygame.mixer.quit()
     pygame.quit()
 
     # Ensure program maintains a rate of 30 frames per second
-
-
 
 
 if __name__ == "__main__":
