@@ -5,8 +5,9 @@ from game_classes import *
 
 def main():
     pygame.init()
+    clock = pygame.time.Clock()
     # Define constants for the screen width and height
-
+    screen = pygame.display.set_mode([screen_width, screen_height])
     player_1 = Player()
 
     # Create groups to hold enemy sprites and all sprites
@@ -20,8 +21,6 @@ def main():
     all_sprites = pygame.sprite.Group()
 
     all_sprites.add(player_1)
-
-    screen = pygame.display.set_mode([screen_width, screen_height])
 
     # Create a custom event for adding a new enemy
 
@@ -61,13 +60,7 @@ def main():
 
         enemies.update()
 
-        screen.fill((0, 0, 255))
-
-        pygame.draw.circle(screen, (255, 200, 255), (250, 250), 100)
-
-        surf = pygame.Surface((50, 50))
-
-        surf.fill((0, 0, 0))
+        screen.fill((255, 255, 255))
 
         # Draw all sprites
 
@@ -84,8 +77,13 @@ def main():
             game_on = False
 
         pygame.display.flip()
+        clock.tick(30)
 
     pygame.quit()
+
+    # Ensure program maintains a rate of 30 frames per second
+
+
 
 
 if __name__ == "__main__":

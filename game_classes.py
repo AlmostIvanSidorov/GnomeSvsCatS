@@ -4,6 +4,8 @@ import os
 
 from pygame.locals import (
 
+    RLEACCEL,
+
     K_UP,
 
     K_DOWN,
@@ -42,25 +44,25 @@ class Player(pygame.sprite.Sprite):
 
         super(Player, self).__init__()
 
-        self.surf = pygame.Surface((75, 25))
+        self.surf = pygame.image.load("sprites/naruto.png").convert()
 
-        self.surf.fill((255, 255, 255))
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.rect = self.surf.get_rect()
 
     def update(self, pressed_keys):
 
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -1)
+            self.rect.move_ip(0, -5)
 
         if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 1)
+            self.rect.move_ip(0, 5)
 
         if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-1, 0)
+            self.rect.move_ip(-5, 0)
 
         if pressed_keys[K_RIGHT]:
-            self.rect.move_ip(1, 0)
+            self.rect.move_ip(5, 0)
 
         if self.rect.left < 0:
             self.rect.left = 0
@@ -79,9 +81,9 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
 
-        self.surf = pygame.Surface((20, 10))
+        self.surf = pygame.image.load("sprites/kunai.png").convert()
 
-        self.surf.fill((255, 255, 255))
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.rect = self.surf.get_rect(
 
@@ -95,8 +97,7 @@ class Enemy(pygame.sprite.Sprite):
 
         )
 
-        # self.speed = random.randint(1, 2)
-        self.speed = 1
+        self.speed = random.randint(5, 20)
 
     def update(self):
         self.rect.move_ip(-self.speed, 0)
