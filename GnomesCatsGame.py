@@ -24,27 +24,17 @@ def main():
 
     collision_sound = pygame.mixer.Sound("sprites/hit.wav")
 
-    # Load all sound files
+    enemies = pygame.sprite.Group()
 
-    # Sound sources: Jon Fincher
-
+    clouds = pygame.sprite.Group()
     # Define constants for the screen width and height
     screen = pygame.display.set_mode([screen_width, screen_height])
     player_1 = Player(move_up_sound, move_down_sound)
 
-    # Create groups to hold enemy sprites and all sprites
+    all_sprites_upper = pygame.sprite.Group()
+    all_sprites_lower = pygame.sprite.Group()
 
-    # - enemies is used for collision detection and position updates
-
-    # - all_sprites is used for rendering
-
-    enemies = pygame.sprite.Group()
-
-    clouds = pygame.sprite.Group()
-
-    all_sprites = pygame.sprite.Group()
-
-    all_sprites.add(player_1)
+    # all_sprites.add(player_1)
 
     # Create a custom event for adding a new enemy
 
@@ -74,7 +64,7 @@ def main():
 
                 enemies.add(new_enemy)
 
-                all_sprites.add(new_enemy)
+                all_sprites_upper.add(new_enemy)
 
             elif event.type == ADDECLOUD:
                 # Create the new enemy and add it to sprite groups
@@ -83,7 +73,10 @@ def main():
 
                 clouds.add(new_cloud)
 
-                all_sprites.add(new_cloud)
+                if random.randint(0, 3) == 0:
+                    all_sprites_upper.add(new_cloud)
+                else:
+                    all_sprites_lower.add(new_cloud)
 
         # Get all the keys currently pressed
 
@@ -102,8 +95,16 @@ def main():
 
         # Draw all sprites
 
-        for entity in all_sprites:
+        for entity in all_sprites_lower:
             screen.blit(entity.surf, entity.rect)
+
+        screen.blit(player_1.surf, player_1.rect)
+
+        for entity in all_sprites_upper:
+            screen.blit(entity.surf, entity.rect)
+
+
+
 
         # Check if any enemies have collided with the player
 

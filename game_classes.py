@@ -104,7 +104,7 @@ class Enemy(pygame.sprite.Sprite):
 
         )
 
-        self.speed = random.randint(5, 20)
+        self.speed = random.randint(6, 20)
 
     def update(self):
         self.rect.move_ip(-self.speed, 0)
@@ -141,7 +141,7 @@ class Cloud(pygame.sprite.Sprite):
     # Remove the cloud when it passes the left edge of the screen
     def update(self):
 
-        self.rect.move_ip(-5, 0)
+        self.rect.move_ip(-4, 0)
 
         if self.rect.right < 0:
 
