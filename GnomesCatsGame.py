@@ -103,9 +103,6 @@ def main():
         for entity in all_sprites_upper:
             screen.blit(entity.surf, entity.rect)
 
-
-
-
         # Check if any enemies have collided with the player
 
         if pygame.sprite.spritecollideany(player_1, enemies):
