@@ -1,6 +1,6 @@
 # GnomeSvsCatS
 
-A simple arcade game where gnomes try to attack cats!
+A simple arcade game where gnomes try to attack cats!!!
 
 ## Description
 
