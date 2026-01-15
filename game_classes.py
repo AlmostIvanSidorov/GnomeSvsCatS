@@ -88,7 +88,7 @@ class Enemy(pygame.sprite.Sprite):
             )
         )
 
-        self.speed = random.randint(6, 20)
+        self.speed = random.randint(3, 10)
 
     def update(self):
         self.rect.move_ip(-self.speed, 0)

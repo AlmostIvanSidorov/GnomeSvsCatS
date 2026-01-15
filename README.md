@@ -1,6 +1,6 @@
-# GnomeSvsCatS
+# AI Agent Game
 
-A simple arcade game where gnomes try to attack cats!!!
+A simple arcade game where AI agents battle in the clouds!!!
 
 ## Description
 
