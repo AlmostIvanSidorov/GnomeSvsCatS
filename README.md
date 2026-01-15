@@ -1,6 +1,6 @@
 # AI Agent Game
 
-A simple arcade game where AI agents battle in the clouds!!!
+A simple arcade game where Naruto battle in the clouds!!!
 
 ## Description
 
